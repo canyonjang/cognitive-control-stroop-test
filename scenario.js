@@ -23,3 +23,5 @@ var scenario_trials = selected_scenarios.map(function(s) {
     data: {task: 'scenario', condition: condition, subject_id: subject_id}
   };
 });
+
+console.log("scenario_trials 생성됨:", scenario_trials);

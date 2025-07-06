@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <title>Cognitive Control Stroop Test</title>
   <script src="jspsych.js"></script>
+  <script src="jspsych/plugins/jspsych-survey-text.js"></script>
+  <script src="jspsych/plugins/jspsych-html-keyboard-response.js"></script>
   <script src="scenario.js"></script>
   <script src="stroop_numeric.js"></script>
   <script src="save_data.js"></script>
@@ -12,10 +14,12 @@
 <body>
   <div id="jspsych-target"></div>
   <script>
+    console.log("실험 시작 준비 중");
     jsPsych.init({
       timeline: timeline,
       display_element: 'jspsych-target',
       on_finish: function() {
+        console.log("실험 종료");
         window.location.href = 'thankyou.html';
       }
     });
