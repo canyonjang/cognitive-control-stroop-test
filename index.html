@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>인지 통제 실험</title>
+  <title>Cognitive Control Stroop Test</title>
   <script src="jspsych.js"></script>
   <script src="scenario.js"></script>
   <script src="stroop_numeric.js"></script>
@@ -14,6 +14,7 @@
   <script>
     jsPsych.init({
       timeline: timeline,
+      display_element: 'jspsych-target',
       on_finish: function() {
         window.location.href = 'thankyou.html';
       }
