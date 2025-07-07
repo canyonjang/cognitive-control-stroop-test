@@ -2,10 +2,10 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>Cognitive Control Stroop Test</title>
-  <script src="https://cdn.jsdelivr.net/gh/jspsych/jsPsych@6.3.1/jspsych.js"></script>
-  <script src="plugins/jspsych-survey-text.js"></script>
+  <title>Stroop Test</title>
+  <script src="jspsych.js"></script>
   <script src="plugins/jspsych-html-keyboard-response.js"></script>
+  <script src="plugins/jspsych-survey-text.js"></script>
   <script src="scenario.js"></script>
   <script src="stroop_numeric.js"></script>
   <script src="save_data.js"></script>
@@ -15,57 +15,40 @@
   <div id="jspsych-target"></div>
 
   <script>
-  // ✅ 1. URL에서 ID 추출
-  function getSubjectIDFromURL() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('id') || jsPsych.randomization.randomID(8);
-  }
+    window.onload = function() {
+      console.log("✅ window.onload 실행됨");
 
-  var subject_id = getSubjectIDFromURL();
+      // ✅ query string에서 ID 추출
+      const urlParams = new URLSearchParams(window.location.search);
+      const subject_id = urlParams.get("id") || jsPsych.randomization.randomID(8);
 
-  // ✅ 2. 조건도 랜덤으로 정합니다 (있다면)
-  var condition = jsPsych.randomization.sampleWithoutReplacement(["easy", "hard"], 1)[0];
+      console.log("🧪 ID 확인:", subject_id);
 
-  // ✅ 3. 실험 타임라인 구성
-  var timeline = [];
+      // ✅ 시나리오와 stroop_trial이 모두 준비되었는지 확인
+      console.log("scenario_trials 있음 ✅", scenario_trials);
+      console.log("stroop_trials 있음 ✅", stroop_trials);
 
-  timeline.push({
-    type: 'html-keyboard-response',
-    stimulus: '<p>3 3 3</p>',
-    choices: ['1','2','3','4','5'],
-    data: {
-      task: 'stroop',
-      subject_id: subject_id,
-      condition: condition,
-      trial_index: 1,
-      correct: '3'
-    },
-    on_finish: function(data){
-      data.correct = data.response == data.correct;
-    }
-  });
+      // ✅ 최종 타임라인
+      var timeline = [].concat(scenario_trials, stroop_trials);
 
-  // ✅ 4. 실험 시작
-  jsPsych.init({
-  timeline: timeline,
-  on_finish: function() {
-    // 전체 데이터를 배열로 가져오기
-    let all_data = jsPsych.data.get().values();
+      console.log("🧩 최종 timeline 준비됨 ✅", timeline);
 
-    // Google Apps Script URL로 전송 (✅ 여기 본인의 웹 앱 주소 입력!)
-    fetch("https://script.google.com/macros/s/AKfycbzG4BcGcb39sRz5ocayUDQhIK0Bq9c2f_2_tIHwQRZwwePAncJbpyf3OkW_CXaFZg-9/exec", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(all_data)
-    });
-
-    // 실험 결과를 브라우저에 표시 (선택)
-    jsPsych.data.displayData();
-  }
-});
-</script>
+      // ✅ 실험 시작
+      jsPsych.init({
+        timeline: timeline,
+        on_finish: function () {
+          let all_data = jsPsych.data.get().values();
+          fetch("https://script.google.com/macros/s/AKfycbzG4BcGcb39sRz5ocayUDQhIK0Bq9c2f_2_tIHwQRZwwePAncJbpyf3OkW_CXaFZg-9/exec", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(all_data)
+          });
+          jsPsych.data.displayData(); // 또는 thankyou.html로 이동
+        }
+      });
+    };
+  </script>
 </body>
-
 </html>
