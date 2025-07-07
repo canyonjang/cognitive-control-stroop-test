@@ -16,12 +16,16 @@ var scenarios = {
 
 var selected_scenarios = jsPsych.randomization.sampleWithoutReplacement(scenarios[condition], 2);
 
-var scenario_trials = selected_scenarios.map(function(s) {
+var scenario_trials = selected_scenarios.map(function(s, idx) {
   return {
     type: 'survey-text',
     questions: [{prompt: s, rows: 5, columns: 60}],
-    data: {task: 'scenario', condition: condition, subject_id: subject_id}
+    data: {
+      task: 'scenario',
+      subject_id: subject_id,      // ✅ 추가
+      condition: condition,
+      trial_index: idx
+    }
   };
 });
-
 console.log("scenario_trials 생성됨:", scenario_trials);
