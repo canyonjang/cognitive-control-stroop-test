@@ -15,18 +15,30 @@
   <div id="jspsych-target"></div>
 
   <script>
-    var timeline = [];
+    window.onload = function() {
+      var timeline = [];
 
-    timeline.push(...scenario_trials);
-    timeline.push(...stroop_trials);
-
-    jsPsych.init({
-      display_element: 'jspsych-target', // 이거도 필요할 수 있음
-      timeline: timeline,
-      on_finish: function() {
-        jsPsych.data.displayData();
+      if (typeof scenario_trials !== "undefined") {
+        timeline.push(...scenario_trials);
+      } else {
+        console.error("❌ scenario_trials가 정의되지 않았습니다.");
       }
-    });
+
+      if (typeof stroop_trials !== "undefined") {
+        timeline.push(...stroop_trials);
+      } else {
+        console.error("❌ stroop_trials가 정의되지 않았습니다.");
+      }
+
+      jsPsych.init({
+        display_element: 'jspsych-target',
+        timeline: timeline,
+        on_finish: function() {
+          jsPsych.data.displayData();
+        }
+      });
+    };
   </script>
 </body>
+
 </html>
