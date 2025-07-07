@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Cognitive Control Stroop Test</title>
-  <script src="jspsych.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/jspsych/jsPsych@6.3.1/jspsych.js"></script>
   <script src="plugins/jspsych-survey-text.js"></script>
   <script src="plugins/jspsych-html-keyboard-response.js"></script>
   <script src="scenario.js"></script>
@@ -14,12 +14,6 @@
 <body>
   <div id="jspsych-target"></div>
 
-  <script src="jspsych.js"></script>
-  <script src="plugins/jspsych-html-keyboard-response.js"></script>
-  <script src="plugins/jspsych-survey-text.js"></script>
-  <script src="scenario.js"></script>
-  <script src="stroop_numeric.js"></script>
-
   <script>
     var timeline = [];
 
@@ -27,6 +21,7 @@
     timeline.push(...stroop_trials);
 
     jsPsych.init({
+      display_element: 'jspsych-target', // 이거도 필요할 수 있음
       timeline: timeline,
       on_finish: function() {
         jsPsych.data.displayData();
