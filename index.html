@@ -3,14 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <title>Stroop Test</title>
+
+  <!-- jsPsych 관련 스크립트 -->
   <script src="jspsych.js"></script>
   <script src="plugins/jspsych-html-keyboard-response.js"></script>
   <script src="plugins/jspsych-survey-text.js"></script>
   <script src="scenario.js"></script>
   <script src="stroop_numeric.js"></script>
+
+  <!-- ✅ Google Sheets로 데이터 전송 함수 포함 -->
   <script src="save_data.js"></script>
+
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <div id="jspsych-target"></div>
 
@@ -21,37 +27,34 @@
       // ✅ query string에서 ID 추출
       const urlParams = new URLSearchParams(window.location.search);
       const subject_id = urlParams.get("id") || jsPsych.randomization.randomID(8);
-
       console.log("🧪 ID 확인:", subject_id);
 
       // ✅ 시나리오와 stroop_trial이 모두 준비되었는지 확인
       console.log("scenario_trials 있음 ✅", scenario_trials);
       console.log("stroop_trials 있음 ✅", stroop_trials);
 
-      // ✅ 최종 타임라인
-      var timeline = [].concat(scenario_trials, stroop_trials);
-
+      // ✅ 최종 타임라인 구성
+      const timeline = [].concat(scenario_trials, stroop_trials);
       console.log("🧩 최종 timeline 준비됨 ✅", timeline);
 
       // ✅ 실험 시작
       jsPsych.init({
-  timeline: timeline,
-  on_finish: function() {
-    // 전체 데이터 가져오기
-    let data = jsPsych.data.get().values();
+        timeline: timeline,
+        on_finish: function() {
+          const data = jsPsych.data.get().values();
 
-    // ID 값 추가
-    let urlParams = new URLSearchParams(window.location.search);
-    let subject_id = urlParams.get('id') || jsPsych.randomization.randomID(8);
-    data.forEach(d => d.subject_id = subject_id);
+          // ID 추가
+          data.forEach(d => {
+            d.subject_id = subject_id;
+          });
 
-    // Google Sheets로 전송
-    saveDataToSheet(data);
+          // ✅ Google Sheets로 전송
+          saveDataToSheet(data);
 
-    // 데이터 시각화
-    jsPsych.data.displayData();
-  }
-});
+          // ✅ 데이터 브라우저에 출력
+          jsPsych.data.displayData();
+        }
+      });
     };
   </script>
 </body>
