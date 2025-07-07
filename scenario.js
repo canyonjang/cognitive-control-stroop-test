@@ -1,5 +1,6 @@
 // 시나리오 정의 및 랜덤 배정
-var subject_id = jsPsych.randomization.randomID(8);
+const urlParams = new URLSearchParams(window.location.search);
+const subject_id = urlParams.get('id') || jsPsych.randomization.randomID(8);
 var condition = jsPsych.randomization.sampleWithoutReplacement(["easy", "hard"], 1)[0];
 var scenarios = {
   easy: [
