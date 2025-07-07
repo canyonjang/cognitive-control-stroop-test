@@ -30,5 +30,6 @@ function saveDataToSheet(data) {
       mode: "no-cors",
       body: formData
     });
+   }, i * 300);  // 0.3초 간격
   });
 }
