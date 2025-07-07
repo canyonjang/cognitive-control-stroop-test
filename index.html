@@ -42,7 +42,8 @@
         timeline: timeline,
         on_finish: function() {
           const data = jsPsych.data.get().values();
-
+          
+          console.log("전체 데이터:", data);
           // ID 추가
           data.forEach(d => {
             d.subject_id = subject_id;
