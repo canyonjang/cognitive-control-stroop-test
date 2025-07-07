@@ -28,5 +28,4 @@ var stroop_trials = stroop_stimuli.map(function(trial, index) {
 
 console.log("stroop_trials 생성됨:", stroop_trials);
 
-var timeline = [].concat(scenario_trials, stroop_trials);
-console.log("최종 timeline:", timeline);
+
