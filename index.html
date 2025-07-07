@@ -35,19 +35,23 @@
 
       // ✅ 실험 시작
       jsPsych.init({
-        timeline: timeline,
-        on_finish: function () {
-          let all_data = jsPsych.data.get().values();
-          fetch("https://script.google.com/macros/s/AKfycbxCeYdGMlbgWYYMVBKSNm-xXblsnXotGYPMZAjLzK_2EzMXLrJxsMMjbFNncFl_QmyhxQ/exec", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(all_data)
-          });
-          jsPsych.data.displayData(); // 또는 thankyou.html로 이동
-        }
-      });
+  timeline: timeline,
+  on_finish: function() {
+    // 전체 데이터 가져오기
+    let data = jsPsych.data.get().values();
+
+    // ID 값 추가
+    let urlParams = new URLSearchParams(window.location.search);
+    let subject_id = urlParams.get('id') || jsPsych.randomization.randomID(8);
+    data.forEach(d => d.subject_id = subject_id);
+
+    // Google Sheets로 전송
+    saveDataToSheet(data);
+
+    // 데이터 시각화
+    jsPsych.data.displayData();
+  }
+});
     };
   </script>
 </body>
