@@ -25,7 +25,7 @@ function saveDataToSheet(data) {
 
     fetch(formURL, {
       method: "POST",
-      mode: "no-cors",  // Form 전송 시엔 응답이 없어도 되므로 이 옵션 필요
+      mode: "no-cors",
       body: formData
     });
   });
