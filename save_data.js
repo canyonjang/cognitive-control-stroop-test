@@ -14,6 +14,8 @@ function saveDataToSheet(data) {
   };
 
   data.forEach(trial => {
+    console.log("전송할 trial:", trial);
+
     const formData = new FormData();
     formData.append(`entry.${entryIDs.subject_id}`, trial.subject_id || "");
     formData.append(`entry.${entryIDs.condition}`, trial.condition || "");
