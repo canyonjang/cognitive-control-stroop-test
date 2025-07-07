@@ -4,13 +4,13 @@ function saveDataToSheet(data) {
 
   // ✅ 각 항목의 Entry ID (Google Form 실행 로그에서 복사한 값)
   const entryIDs = {
-    subject_id: "943708936",
-    condition: "1074800980",
-    trial_index: "416728468",
-    stimulus: "1569164791",
-    response: "1886761202",
-    rt: "1845520126",
-    correct: "1692536337"
+    subject_id: "932143536",
+    condition: "1841598794",
+    trial_index: "938223106",
+    stimulus: "1369524967",
+    response: "832986639",
+    rt: "1227397003",
+    correct: "380677287"
   };
 
   data.forEach(trial => {
