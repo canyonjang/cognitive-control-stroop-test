@@ -40,10 +40,18 @@
       // timeline이 비어있지 않으면 jsPsych 실행
       if (timeline.length > 0) {
         jsPsych.init({
-          display_element: 'jspsych-target',
           timeline: timeline,
           on_finish: function() {
-            jsPsych.data.displayData();
+           // 마지막 trial 데이터만 구글시트에 전송
+            fetch("https://script.google.com/macros/s/여기에_복사한_URL_붙여넣기/exec", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify(jsPsych.data.get().last(1).values()[0])
+             });
+
+            jsPsych.data.displayData(); // 결과 화면
           }
         });
       } else {
