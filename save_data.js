@@ -1,6 +1,6 @@
-// ✅ 전체 데이터 저장 함수 (Google Sheets로 POST 전송)
+// 전체 데이터 저장 함수
 function saveDataToSheet(data) {
-  fetch("https://script.google.com/macros/s/AKfycbxfym_6mzpBpmGVEcyjdqw7ejEOq6zgH7swJflKufxIgcx37lW-_BSI9QJJXtIu8HBU5Q/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbzyfakGcKLwqeLMO9GvtZ2zp0Y1e1R2PfxM1DpUX4YFyT2X-D97WGICRrQ2wA8rGrIpkg/exec", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -8,13 +8,12 @@ function saveDataToSheet(data) {
     body: JSON.stringify(data)
   })
   .then(response => {
-    if (response.ok) {
-      console.log("✅ Google Sheet로 데이터 전송 성공");
-    } else {
-      console.error("❌ 전송 응답 오류:", response.statusText);
+    if (!response.ok) {
+      throw new Error("서버 응답 오류");
     }
+    console.log("✅ Google Sheet로 데이터 전송 성공");
   })
   .catch(error => {
-    console.error("❌ 전송 실패:", error);
+    console.error("❌ 데이터 전송 실패:", error);
   });
 }
