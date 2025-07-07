@@ -16,27 +16,39 @@
 
   <script>
     window.onload = function() {
+      console.log("🚀 window.onload 실행됨");
+
+      // timeline을 전역으로 정의
       var timeline = [];
 
+      // scenario_trials가 정의되어 있으면 추가
       if (typeof scenario_trials !== "undefined") {
+        console.log("✅ scenario_trials 있음");
         timeline.push(...scenario_trials);
       } else {
-        console.error("❌ scenario_trials가 정의되지 않았습니다.");
+        console.error("❌ scenario_trials 없음");
       }
 
+      // stroop_trials가 정의되어 있으면 추가
       if (typeof stroop_trials !== "undefined") {
+        console.log("✅ stroop_trials 있음");
         timeline.push(...stroop_trials);
       } else {
-        console.error("❌ stroop_trials가 정의되지 않았습니다.");
+        console.error("❌ stroop_trials 없음");
       }
 
-      jsPsych.init({
-        display_element: 'jspsych-target',
-        timeline: timeline,
-        on_finish: function() {
-          jsPsych.data.displayData();
-        }
-      });
+      // timeline이 비어있지 않으면 jsPsych 실행
+      if (timeline.length > 0) {
+        jsPsych.init({
+          display_element: 'jspsych-target',
+          timeline: timeline,
+          on_finish: function() {
+            jsPsych.data.displayData();
+          }
+        });
+      } else {
+        console.error("⚠️ timeline이 비어있어 실험 시작 불가");
+      }
     };
   </script>
 </body>
