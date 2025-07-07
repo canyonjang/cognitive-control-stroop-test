@@ -47,21 +47,24 @@
 
   // ✅ 4. 실험 시작
   jsPsych.init({
-    timeline: timeline,
-    on_finish: function() {
-      let all_data = jsPsych.data.get().values();
+  timeline: timeline,
+  on_finish: function() {
+    // 전체 데이터를 배열로 가져오기
+    let all_data = jsPsych.data.get().values();
 
-      fetch("https://script.google.com/macros/s/여기에_복사한_URL_붙여넣기/exec", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(all_data)
-      });
+    // Google Apps Script URL로 전송 (✅ 여기 본인의 웹 앱 주소 입력!)
+    fetch("https://script.google.com/macros/s/여기에_당신의_웹앱_URL_붙여넣기/exec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(all_data)
+    });
 
-      jsPsych.data.displayData();
-    }
-  });
+    // 실험 결과를 브라우저에 표시 (선택)
+    jsPsych.data.displayData();
+  }
+});
 </script>
 </body>
 
